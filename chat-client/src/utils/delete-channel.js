@@ -1,0 +1,1 @@
+const handleChannelDelete = async (channel) => await channel.delete();
