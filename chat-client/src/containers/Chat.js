@@ -19,11 +19,13 @@ import useStore1 from "../store";
 import Storage from "../utils/storage";
 import { ChannelContainer } from "./ChannelContainer";
 import { ChannelListContainer } from "./ChannelListContainer";
+import { Conatiners } from "./Containers";
 
 export const RevirtChat = () => {
   const [client, setClient] = useState(null);
   const navigate = useNavigate();
   const storage = new Storage();
+  
 
   const parseJwt = useCallback((token) => {
     if (!token) {
@@ -82,20 +84,7 @@ export const RevirtChat = () => {
   if (!client) return <LoadingIndicator />;
   return (
     <Chat client={client} darkMode={darkModeTheme}>
-      <ChannelListContainer
-      // isCreating={isCreating}
-      // setIsCreating={setIsCreating}
-      // setCreateType={setCreateType}
-      // setIsEditing={setIsEditing}
-      />
-      <Channel>
-        <Window>
-          <ChannelHeader />
-          <MessageList />
-          <MessageInput />
-        </Window>
-        <Thread />
-      </Channel>
+   <Conatiners/>
     </Chat>
   );
 };

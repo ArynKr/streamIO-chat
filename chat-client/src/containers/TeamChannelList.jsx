@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ChannelList, useChatContext } from "stream-chat-react";
 import { ChannelItem } from "./ChannelItem";
-export const TeamChannelList = ({ children }) => {
+export const TeamChannelList = ({ children ,setShow}) => {
   const [channels, setChannels] = useState([]);
   const { client } = useChatContext();
 
@@ -21,7 +21,7 @@ export const TeamChannelList = ({ children }) => {
   return (
     <div>
       {channels?.map((channel) => (
-        <ChannelItem channel={channel} key={channel?.id} />
+        <ChannelItem channel={channel} key={channel?.id} setShow={setShow} />
       ))}
     </div>
   );

@@ -6,7 +6,8 @@ const GLOBAL_ID = "global"
 export const Participants = ()=>{
     const [channels,setChannels] = useState([])
     const [participants, setParticipants] = useState([])
-    const { client } = useChatContext();
+    const hello= useChatContext();
+    const {client} = hello;
 
 
     useEffect(() => {

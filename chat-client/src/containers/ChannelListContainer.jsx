@@ -9,7 +9,7 @@ export const Search = () => {
     </div>
   );
 };
-export const ChannelListContainer = () => {
+export const ChannelListContainer = ({setShow}) => {
   return (
     <div className="channelListContainer">
       <div>Inbox</div>
@@ -17,7 +17,7 @@ export const ChannelListContainer = () => {
       <div className="channelTitle">channels</div>
 
       <button className="channelCreateButton">Create New Channel</button>
-      <TeamChannelList />
+      <TeamChannelList setShow={setShow}/>
       <div className="channelTitle">all participants</div>
       <Participants />
     </div>
