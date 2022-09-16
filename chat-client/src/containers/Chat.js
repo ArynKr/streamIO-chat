@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { StreamChat } from "stream-chat";
@@ -24,9 +25,18 @@ export const RevirtChat = () => {
   const navigate = useNavigate();
   const storage = new Storage();
 
-  const user = {
-    id: useStore1((state) => state.userId),
-  };
+  const parseJwt = useCallback((token) => {
+    if (!token) {
+      return;
+    }
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace("-", "+").replace("_", "/");
+    return JSON.parse(window.atob(base64));
+  }, []);
+
+  const [user, setUser] = useState({
+    id: parseJwt(storage.get("chatToken")).user_id,
+  });
 
   const handleLogout = () => {
     storage.delete("chatToken");
@@ -35,10 +45,12 @@ export const RevirtChat = () => {
 
   useEffect(() => {
     async function init() {
+      console.log(user);
       if (!user.id) {
         navigate("/");
         return;
       }
+      console.log(user, "user");
       const chatClient = StreamChat.getInstance(process.env.REACT_APP_API_KEY);
       await chatClient.connectUser(user, storage.get("chatToken"));
       const filters = { type: "livestream", members: { $in: [user.id] } };
@@ -48,7 +60,6 @@ export const RevirtChat = () => {
         const audio = new Audio(process.env.REACT_APP_TEST_AUDIO_URL);
         audio.play();
       });
-
       setClient(chatClient);
     }
     init();
@@ -66,18 +77,18 @@ export const RevirtChat = () => {
       }
     };
   }, [client]);
-//  <button onClick={handleLogout}>Logout</button>
+  //  <button onClick={handleLogout}>Logout</button>
   const filters = { type: "livestream", members: { $in: [user.id] } };
   if (!client) return <LoadingIndicator />;
   return (
     <Chat client={client} darkMode={darkModeTheme}>
-    <ChannelListContainer
-    // isCreating={isCreating}
-    // setIsCreating={setIsCreating}
-    // setCreateType={setCreateType}
-    // setIsEditing={setIsEditing}
-/>
-<Channel>
+      <ChannelListContainer
+      // isCreating={isCreating}
+      // setIsCreating={setIsCreating}
+      // setCreateType={setCreateType}
+      // setIsEditing={setIsEditing}
+      />
+      <Channel>
         <Window>
           <ChannelHeader />
           <MessageList />
@@ -85,8 +96,6 @@ export const RevirtChat = () => {
         </Window>
         <Thread />
       </Channel>
-
     </Chat>
   );
 };
-

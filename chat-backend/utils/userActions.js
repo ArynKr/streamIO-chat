@@ -9,7 +9,9 @@ const addToGlobalChannel = async (userId) => {
       id: userId,
       role: "user",
     });
-    const channel = await serverClient.queryChannels({});
+    const channel = await serverClient.queryChannels({
+      id: { $in: ["global"] },
+    });
     console.log(channel);
     const data = await channel[0].addMembers([userId]);
     return data;

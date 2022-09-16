@@ -56,12 +56,22 @@
 .channelListContainer{
   margin:0 10rem;  
   width:306px;
-  height:100vh;
+  height:96vh;
   background-color: #1C1C1C;
   padding:1rem 0.8rem;
   color: white;
-
+  overflow-y: scroll;
+  
+  /* Remove scrollbar */
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
+
+/* Remove scrollbar */
+.channelListContainer::-webkit-scrollbar {
+  display: none;
+}
+
 .channelSearch{
   width:270px;
   margin: 1rem 0 ;
@@ -79,8 +89,7 @@
   height: 32px;
   color: #6A6A6A;
   background-color: #232323;
- 
-
+  margin-block: 1rem;
 }
 .channelCreateButton{
 width: 172px;
