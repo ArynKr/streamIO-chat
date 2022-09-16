@@ -6,6 +6,22 @@ import {
     MessageInput,
     Thread,
     useChatContext,
+    useMessageContext,
+   
+        Attachment,
+        Avatar,
+        messageHasReactions,
+        MessageOptions,
+        MessageRepliesCountButton,
+        MessageStatus,
+        MessageText,
+        MessageTimestamp,
+        ReactionSelector,
+        SimpleReactionsList,
+        useChannelStateContext,
+     
+        
+   
     
 } 
 
@@ -18,10 +34,18 @@ const EmptyState = () => (
     </div>
 )
 export const ChannelContainer = ()=>{
-  const hello=useChatContext()
-  const channel = useStore1((state)=>state.activeChannel)
+  const {channel} =useChatContext()
+//   console.log(hello.setActiveChannel,"comign")
 
-  console.log(hello,"from channel")
+  const { message, threadList } = useMessageContext();
+  console.log(message,threadList,"comingg")
+  const { channel:channel1, watchers } = useChannelStateContext();
+  console.log(channel1,"hii")
+
+//   const channel = useStore1((state)=>state.activeChannel)
+ 
+
+
     return(
      
         <Channel
@@ -32,7 +56,7 @@ export const ChannelContainer = ()=>{
                 <MessageList />
                 <MessageInput />
               </Window>
-             
+              <Thread />
                 
             </Channel>
            

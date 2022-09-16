@@ -22,6 +22,7 @@ import { ChannelListContainer } from "./ChannelListContainer";
 import { Conatiners } from "./Containers";
 
 export const RevirtChat = () => {
+  
   const [client, setClient] = useState(null);
   const navigate = useNavigate();
   const storage = new Storage();
@@ -83,8 +84,10 @@ export const RevirtChat = () => {
   const filters = { type: "livestream", members: { $in: [user.id] } };
   if (!client) return <LoadingIndicator />;
   return (
+    <div className="chatContainer-main">
     <Chat client={client} darkMode={darkModeTheme}>
    <Conatiners/>
     </Chat>
+    </div>
   );
 };

@@ -55,7 +55,7 @@
 
 .channelListContainer{
   margin:0 8rem;  
-  width:306px;
+  /* width:306px; */
   height:96vh;
   background-color: #1C1C1C;
   padding:1rem 0.8rem;
@@ -103,7 +103,8 @@ margin:1rem 20% ;
 cursor: pointer;
 }
 .str-chat.messaging{
-  width: 90%;
+  width:100%;
+  /* width: 90%; */
   /* height: fit-content; */
   background-color: #1C1C1C;
 }
@@ -139,12 +140,13 @@ cursor: pointer;
 }
 .str-chat__container,.str-chat-channel,.str-chat{
   margin:0 8rem;  
-  width:400px;
+  /* width:400px; */
   height:96vh;
+  
 }
 .str-chat.messaging{
   background-color: transparent;
-  width:0px;
+  /* width:0px; */
 
 }
 .str-chat.messaging, .str-chat.commerce {
@@ -155,4 +157,7 @@ cursor: pointer;
 }
 .messaging.str-chat .str-chat__header-livestream {
   border-radius: 0px !important;
+}
+.chatContainer-main{
+  width:566px;
 }
