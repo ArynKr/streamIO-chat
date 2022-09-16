@@ -7,7 +7,7 @@ export const Participants = ()=>{
     const [channels,setChannels] = useState([])
     const [participants, setParticipants] = useState([])
     const hello= useChatContext();
-    const {client} = hello;
+    const {client,setActiveChannel} = hello;
 
 
     useEffect(() => {
@@ -17,12 +17,13 @@ export const Participants = ()=>{
             const filter = {id: {$in: [GLOBAL_ID]}}
             const globalChannel = await client.queryChannels(filter);
             setParticipants(Object.values(globalChannel[0]?.state?.members))
+            setActiveChannel(globalChannel)
            
         }
 
         init();}, [])
         
-    console.log(hello,"hello")
+    console.log(hello,client,"hello")
 
    
     return(

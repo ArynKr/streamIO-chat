@@ -13,6 +13,7 @@ import {
   LoadingIndicator,
   ChannelList,
   darkModeTheme,
+  useChatContext,
 } from "stream-chat-react";
 import "stream-chat-react/dist/css/index.css";
 import useStore1 from "../store";
@@ -24,6 +25,7 @@ import { Conatiners } from "./Containers";
 export const RevirtChat = () => {
   
   const [client, setClient] = useState(null);
+  const setUserId = useStore1((state)=>state.setUserId)
   const navigate = useNavigate();
   const storage = new Storage();
   
@@ -40,6 +42,7 @@ export const RevirtChat = () => {
   const [user, setUser] = useState({
     id: parseJwt(storage.get("chatToken")).user_id,
   });
+  setUserId(user?.id)
 
   const handleLogout = () => {
     storage.delete("chatToken");
@@ -80,13 +83,14 @@ export const RevirtChat = () => {
       }
     };
   }, [client]);
+
   //  <button onClick={handleLogout}>Logout</button>
   const filters = { type: "livestream", members: { $in: [user.id] } };
   if (!client) return <LoadingIndicator />;
   return (
     <div className="chatContainer-main">
     <Chat client={client} darkMode={darkModeTheme}>
-   <Conatiners/>
+    <Conatiners/>
     </Chat>
     </div>
   );
