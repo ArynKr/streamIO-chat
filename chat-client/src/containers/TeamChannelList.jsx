@@ -21,8 +21,13 @@ export const TeamChannelList = ({ children ,setShow}) => {
   return (
     <div>
       {channels?.map((channel) => (
-        <ChannelItem channel={channel} key={channel?.id} setShow={setShow} />
-      ))}
+            <ChannelItem channel={channel} key={channel?.id} setShow={setShow} />
+          ))}
+   
     </div>
   );
 };
+
+//   {channels?.map((channel) => (
+    //     <ChannelItem channel={channel} key={channel?.id} setShow={setShow} />
+    //   ))}

@@ -37,10 +37,10 @@
   color: #61dafb;
 }
 .str-chat {
-  height: 100vh;
+  height:96vh;
   font-family: var(--second-font);
   color: var(--black);
-  width:196px;
+  /* width:196px; */
   /* margin: 0 2rem; */
 }
 
@@ -54,7 +54,7 @@
 }
 
 .channelListContainer{
-  margin:0 10rem;  
+  margin:0 8rem;  
   width:306px;
   height:96vh;
   background-color: #1C1C1C;
@@ -136,4 +136,23 @@ cursor: pointer;
   align-items: center;
   color: #6A6A6A;
   gap: 1.5rem;
+}
+.str-chat__container,.str-chat-channel,.str-chat{
+  margin:0 8rem;  
+  width:400px;
+  height:96vh;
+}
+.str-chat.messaging{
+  background-color: transparent;
+  width:0px;
+
+}
+.str-chat.messaging, .str-chat.commerce {
+  background-color:transparent !important;
+}
+.messaging.str-chat .str-chat__list {
+  background:#1C1C1C !important;
+}
+.messaging.str-chat .str-chat__header-livestream {
+  border-radius: 0px !important;
 }

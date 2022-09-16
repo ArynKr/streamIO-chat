@@ -15,16 +15,14 @@ export const Participants = ()=>{
             const channels = await client.queryChannels();
             setChannels(channels)
             const filter = {id: {$in: [GLOBAL_ID]}}
-            console.log(filter,"filter")
             const globalChannel = await client.queryChannels(filter);
-            console.log(globalChannel[0]?.state?.members,"hello")
             setParticipants(Object.values(globalChannel[0]?.state?.members))
-            console.log(globalChannel, "GC")
+           
         }
 
         init();}, [])
         
-
+    console.log(hello,"hello")
 
    
     return(
