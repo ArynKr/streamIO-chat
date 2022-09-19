@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ChannelList, useChatContext } from "stream-chat-react";
+import { useChatContext } from "stream-chat-react";
 import { ChannelItem } from "./ChannelItem";
 export const TeamChannelList = () => {
   const [channels, setChannels] = useState([]);
@@ -7,17 +7,15 @@ export const TeamChannelList = () => {
 
   useEffect(() => {
     (async function () {
+      client.on("channel.");
+      console.log(client, "client");
       const userId = client.user.id;
-      const filter = { members: { $in: [userId] } };
+      const filter = { type: "livestream", members: { $in: [userId] } };
       const channels = await client.queryChannels(filter);
+      console.log(channels, "client");
       setChannels(channels);
     })();
   }, [client]);
-  // (async function(){
-  //     const channels = await client.queryChannels();
-  //     setChannel(channels)
-  // })()
-  console.log(channels, "channels");
   return (
     <div>
       {channels?.map((channel) => (

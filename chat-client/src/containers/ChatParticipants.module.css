@@ -1,0 +1,17 @@
+.chatParticipants_info{
+  display: flex;
+}
+
+.chatParticipants{
+  height:15rem;
+  overflow-y: scroll;
+}
+
+.chatParticipants::-webkit-scrollbar {
+  display: none;
+}
+
+.chatParticipants {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}

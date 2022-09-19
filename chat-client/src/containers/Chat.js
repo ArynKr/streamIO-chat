@@ -20,6 +20,7 @@ import Storage from "../utils/storage";
 import { Conatiners } from "./Containers";
 
 export const RevirtChat = () => {
+  const setUserId = useStore1((state) => state.setUserId);
   const [client, setClient] = useState(null);
   const navigate = useNavigate();
   const storage = new Storage();
@@ -49,7 +50,8 @@ export const RevirtChat = () => {
         navigate("/");
         return;
       }
-      
+      setUserId(user.id);
+
       const chatClient = StreamChat.getInstance(process.env.REACT_APP_API_KEY);
       await chatClient.connectUser(user, storage.get("chatToken"));
       const filters = { type: "livestream", members: { $in: [user.id] } };

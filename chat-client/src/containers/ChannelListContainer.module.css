@@ -11,6 +11,10 @@
   cursor: pointer;
 }
 
+.input::placeholder {
+  color: black;
+}
+
 .form {
   display: flex;
   flex-direction: column;
@@ -39,10 +43,10 @@
   outline: none;
   border: none;
 }
-.chatParticipants_info{
-  display: flex;
-}
-.chatParticipants{
-  height:15rem;
-  overflow-y: scroll;
+
+.btn:disabled, 
+button[disabled] {
+  background-color: #80008077;
+  color: black;
+  cursor: not-allowed;
 }

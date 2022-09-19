@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { ChannelList } from "stream-chat-react";
 import axios from "axios";
 import useStore1 from "../store";
 import { ModalWrapper } from "../component/ModalWrapper";
@@ -7,6 +6,7 @@ import { Participants } from "./Participants";
 import { TeamChannelList } from "./TeamChannelList";
 import styles from "./ChannelListContainer.module.css";
 import { ChatParticipants } from "./ChatParticipants";
+import { createChannel } from "../utils/create-channel";
 
 export const Search = () => {
   return (
@@ -17,21 +17,19 @@ export const Search = () => {
 };
 
 export const ChannelListContainer = () => {
+  const userId = useStore1((state) => state.userId);
   const showChatModal = useStore1((state) => state.showChatModal);
   const setShowChatModal = useStore1((state) => state.setShowChatModal);
   const [channelName, setChannelName] = useState("");
-  const [members,setMembers] = useState([])
+  const [members, setMembers] = useState([userId]);
 
   const handleCreateNewChannel = async (e) => {
     e.preventDefault();
     try {
-      const { data } = axios.post("http://localhost:5173/chat/channel", {
-        channelName,
-      });
-      console.log(data);
+      createChannel(channelName, members, userId, "livestream");
       setChannelName("");
       setShowChatModal(false);
-      setMembers([])
+      setMembers([userId]);
     } catch (err) {
       console.log(err.response);
     }
@@ -63,8 +61,12 @@ export const ChannelListContainer = () => {
                   value={channelName}
                   onChange={(e) => setChannelName(e.target.value)}
                 />
-                <ChatParticipants members={members} setMembers={setMembers}/>
-                <button className={styles.btn} type="submit">
+                <ChatParticipants members={members} setMembers={setMembers} />
+                <button
+                  className={styles.btn}
+                  type="submit"
+                  disabled={!members.length || !channelName}
+                >
                   Create Channel
                 </button>
               </form>

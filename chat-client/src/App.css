@@ -31,6 +31,11 @@
   border-radius: 4px;
   outline: none;
 }
+
+.channelSearch::placeholder {
+  color: #ffffff88;
+}
+
 .channelTitle{
   display: flex;
   justify-content: center;
