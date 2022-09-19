@@ -17,8 +17,6 @@ import {
 import "stream-chat-react/dist/css/index.css";
 import useStore1 from "../store";
 import Storage from "../utils/storage";
-import { ChannelContainer } from "./ChannelContainer";
-import { ChannelListContainer } from "./ChannelListContainer";
 import { Conatiners } from "./Containers";
 
 export const RevirtChat = () => {
@@ -51,7 +49,7 @@ export const RevirtChat = () => {
         navigate("/");
         return;
       }
-      console.log(user, "user");
+      
       const chatClient = StreamChat.getInstance(process.env.REACT_APP_API_KEY);
       await chatClient.connectUser(user, storage.get("chatToken"));
       const filters = { type: "livestream", members: { $in: [user.id] } };

@@ -36,4 +36,13 @@
   background-color: #800080;
   border-radius: 0.5rem;
   cursor: pointer;
+  outline: none;
+  border: none;
+}
+.chatParticipants_info{
+  display: flex;
+}
+.chatParticipants{
+  height:15rem;
+  overflow-y: scroll;
 }

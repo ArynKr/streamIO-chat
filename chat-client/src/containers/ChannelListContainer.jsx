@@ -6,6 +6,7 @@ import { ModalWrapper } from "../component/ModalWrapper";
 import { Participants } from "./Participants";
 import { TeamChannelList } from "./TeamChannelList";
 import styles from "./ChannelListContainer.module.css";
+import { ChatParticipants } from "./ChatParticipants";
 
 export const Search = () => {
   return (
@@ -19,6 +20,7 @@ export const ChannelListContainer = () => {
   const showChatModal = useStore1((state) => state.showChatModal);
   const setShowChatModal = useStore1((state) => state.setShowChatModal);
   const [channelName, setChannelName] = useState("");
+  const [members,setMembers] = useState([])
 
   const handleCreateNewChannel = async (e) => {
     e.preventDefault();
@@ -29,6 +31,7 @@ export const ChannelListContainer = () => {
       console.log(data);
       setChannelName("");
       setShowChatModal(false);
+      setMembers([])
     } catch (err) {
       console.log(err.response);
     }
@@ -60,6 +63,7 @@ export const ChannelListContainer = () => {
                   value={channelName}
                   onChange={(e) => setChannelName(e.target.value)}
                 />
+                <ChatParticipants members={members} setMembers={setMembers}/>
                 <button className={styles.btn} type="submit">
                   Create Channel
                 </button>
