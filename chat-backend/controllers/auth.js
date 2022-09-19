@@ -1,8 +1,8 @@
-const { addToGlobalChannel } = require("../utils/userActions");
-
 const StreamChat = require("stream-chat").StreamChat;
 const apiSecret = process.env["CHAT_SECRET"];
 const apiKey = process.env["CHAT_KEY"];
+
+const { addToGlobalChannel } = require("../utils/userActions");
 
 const signup = async (req, res) => {
   try {

@@ -22,11 +22,9 @@ import { ChannelListContainer } from "./ChannelListContainer";
 import { Conatiners } from "./Containers";
 
 export const RevirtChat = () => {
-  
   const [client, setClient] = useState(null);
   const navigate = useNavigate();
   const storage = new Storage();
-  
 
   const parseJwt = useCallback((token) => {
     if (!token) {
@@ -85,9 +83,9 @@ export const RevirtChat = () => {
   if (!client) return <LoadingIndicator />;
   return (
     <div className="chatContainer-main">
-    <Chat client={client} darkMode={darkModeTheme}>
-   <Conatiners/>
-    </Chat>
+      <Chat client={client} darkMode={darkModeTheme}>
+        <Conatiners />
+      </Chat>
     </div>
   );
 };

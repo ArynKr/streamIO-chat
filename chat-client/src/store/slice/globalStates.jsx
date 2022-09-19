@@ -1,16 +1,14 @@
-
-
 export const useUserData = (set) => ({
-  userId:null,
-  userName:null,
-  showChannelList:true,
-  activeChannel:null,
-  setUserId: (payload) => set(() => {return ({userId:payload})}),
-  setUserName: (payload) => set(() => {return ({userName:payload})}),
-  setShowChannelList:(payload)=>set((state)=>{return ({showChannelList:payload})}),
-  setActiveChannel: (payload) => set(() => {return ({activeChannel:payload})}),
+  userId: null,
+  userName: null,
+  showChannelList: true,
+  activeChannel: null,
+  showChatModal: false,
 
-  
-})
-
-
+  setShowChatModal: (payload) => set(() => ({ showChatModal: payload })),
+  setUserId: (payload) => set(() => ({ userId: payload })),
+  setUserName: (payload) => set(() => ({ userName: payload })),
+  setShowChannelList: (payload) =>
+    set((state) => ({ showChannelList: payload })),
+  setActiveChannel: (payload) => set(() => ({ activeChannel: payload })),
+});
