@@ -8,6 +8,7 @@ import {
   useChannelStateContext,
 } from "stream-chat-react";
 import useStore1 from "../store";
+import back from "../assets/back-icon.png";
 
 const EmptyState = () => (
   <div className="channel-empty__container">
@@ -20,11 +21,17 @@ const EmptyState = () => (
   </div>
 );
 
-export const ChannelContainer = ({ setShow }) => {
-  const { channel } = useChatContext();
+export const ChannelContainer = () => {
+  const { channel, client } = useChatContext();
+
   const CustomChannelHeader = () => {
     const { channel } = useChannelStateContext();
-    const { name, image, member_count } = channel.data || {};
+    const { image, member_count } = channel.data || {};
+    let { name } = channel.data || {};
+    if (channel.type === "messaging") {
+      const users = name.split("_");
+      name = users.find((user) => user !== client.user.id);
+    }
     const { watcher_count: online } = channel.state;
     const setShowChannelList = useStore1((state) => state.setShowChannelList);
 
@@ -42,17 +49,15 @@ export const ChannelContainer = ({ setShow }) => {
         <button
           onClick={() => setShowChannelList(true)}
           style={{
-            fontSize: "1.75rem",
-            marginRight: "0.75rem",
+            marginRight: "0.25rem",
             textDecoration: "none",
             backgroundColor: "inherit",
             border: "none",
             outline: "none",
-            color: "white",
             cursor: "pointer",
           }}
         >
-          &lt;
+          <img src={back} width={30} height={30} alt="back" />
         </button>
         {/* Image */}
         <img
