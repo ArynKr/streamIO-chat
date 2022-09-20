@@ -30,6 +30,7 @@ export const Participants = () => {
     const members = [userId, participant.user.id];
     try {
       const res = await createChannel(
+        null,
         `${userId}_${participant.user.id}`,
         members,
         userId,

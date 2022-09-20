@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const createChannel = async (
+  id,
   name,
   members,
   created_by_id,
@@ -16,6 +17,7 @@ export const createChannel = async (
       created_by_id,
       type,
       image,
+      id,
     });
     return data.channelData;
   } catch (err) {

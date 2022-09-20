@@ -26,7 +26,7 @@ export const ChannelListContainer = () => {
   const handleCreateNewChannel = async (e) => {
     e.preventDefault();
     try {
-      createChannel(channelName, members, userId, "livestream");
+      createChannel(channelName, channelName, members, userId, "livestream");
       setChannelName("");
       setShowChatModal(false);
       setMembers([userId]);
