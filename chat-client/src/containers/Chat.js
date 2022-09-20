@@ -55,20 +55,23 @@ export const RevirtChat = () => {
       const chatClient = StreamChat.getInstance(process.env.REACT_APP_API_KEY);
       await chatClient.connectUser(user, storage.get("chatToken"));
       const filters = { type: "livestream", members: { $in: [user.id] } };
-      const channel = await chatClient.queryChannels(filters);
-      channel[0]?.on("message.new", (e) => {
-        if (e.message.user.id === user.id) return;
-        const audio = new Audio(process.env.REACT_APP_TEST_AUDIO_URL);
-        audio.play();
+      const channels = await chatClient.queryChannels(filters);
+
+      channels.forEach(async (channel) => {
+        await channel.watch();
+        channel?.on("message.new", (e) => {
+          if (e.message.user.id === user.id) return;
+          const audio = new Audio(process.env.REACT_APP_TEST_AUDIO_URL);
+          audio.play();
+        });
       });
+
       setClient(chatClient);
     }
     init();
 
     return () => {
-      console.log(client);
       if (client) {
-        console.log(client);
         const chatClient = StreamChat.getInstance(
           process.env.REACT_APP_API_KEY
         );
@@ -78,8 +81,7 @@ export const RevirtChat = () => {
       }
     };
   }, [client]);
-  //  <button onClick={handleLogout}>Logout</button>
-  const filters = { type: "livestream", members: { $in: [user.id] } };
+
   if (!client) return <LoadingIndicator />;
   return (
     <div className="chatContainer-main">

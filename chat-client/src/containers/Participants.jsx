@@ -6,27 +6,27 @@ const GLOBAL_ID = "global";
 
 export const Participants = () => {
   const userId = useStore1((state) => state.userId);
-  const [channels, setChannels] = useState([]);
+
   const [participants, setParticipants] = useState([]);
-  const hello = useChatContext();
-  const { client } = hello;
+  const { client } = useChatContext();
   const { setActiveChannel } = useChatContext();
   const setShowChannelList = useStore1((state) => state.setShowChannelList);
 
   useEffect(() => {
     async function init() {
-      const channels = await client.queryChannels();
-      setChannels(channels);
-      const filter = { id: { $in: [GLOBAL_ID] } };
+      const filter = {
+        id: { $in: [GLOBAL_ID] },
+        members: { $in: [client.user.id] },
+      };
       const globalChannel = await client.queryChannels(filter);
+      console.log(globalChannel, "Global");
       setParticipants(Object.values(globalChannel[0]?.state?.members));
     }
 
     init();
-  }, []);
+  }, [client]);
 
   const handlePersonalMessaging = async (participant) => {
-    // console.log(participant);
     const members = [userId, participant.user.id];
     try {
       const res = await createChannel(
@@ -42,6 +42,7 @@ export const Participants = () => {
       };
       const [channel] = await client.queryChannels(filter);
       console.log(channel);
+
       setActiveChannel(channel);
       setShowChannelList(false);
     } catch (err) {

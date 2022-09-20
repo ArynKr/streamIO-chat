@@ -38,25 +38,24 @@ const Participants = ({ participant, members, setMembers }) => {
 export const ChatParticipants = ({ members, setMembers }) => {
   const userId = useStore1((state) => state.userId);
   const [participants, setParticipants] = useState([]);
-  const [channels, setChannels] = useState([]);
-  const hello = useChatContext();
-  const { client } = hello;
+  const { client } = useChatContext();
   useEffect(() => {
     async function init() {
-      const channels = await client.queryChannels();
-      setChannels(channels);
-      const filter = { id: { $in: [GLOBAL_ID] } };
+      const filter = {
+        id: { $in: [GLOBAL_ID] },
+        members: { $in: [client.user.id] },
+      };
       const globalChannel = await client.queryChannels(filter);
       setParticipants(
         Object.values(globalChannel[0]?.state?.members).filter(
-          (participant) => participant.user.id !== userId
+          (participant) => participant.user.id !== client.user.id
         )
       );
     }
 
     init();
-  }, []);
-  console.log(participants, userId, "haha");
+  }, [client]);
+
   return (
     <div className={styles.chatParticipants}>
       {participants?.map((participant) => (

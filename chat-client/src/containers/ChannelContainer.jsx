@@ -22,9 +22,8 @@ const EmptyState = () => (
 
 export const ChannelContainer = ({ setShow }) => {
   const { channel } = useChatContext();
-  const CustomChannelHeader = (props) => {
+  const CustomChannelHeader = () => {
     const { channel } = useChannelStateContext();
-    console.log(channel, "chnl");
     const { name, image, member_count } = channel.data || {};
     const { watcher_count: online } = channel.state;
     const setShowChannelList = useStore1((state) => state.setShowChannelList);
@@ -81,9 +80,9 @@ export const ChannelContainer = ({ setShow }) => {
   };
 
   return (
-    <Channel channel={channel} custom>
+    <Channel channel={channel}>
       <Window>
-        <CustomChannelHeader channel1={channel} />
+        <CustomChannelHeader />
         <MessageList />
         <MessageInput />
       </Window>
