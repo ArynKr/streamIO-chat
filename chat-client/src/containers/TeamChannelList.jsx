@@ -7,7 +7,6 @@ export const TeamChannelList = () => {
 
   useEffect(() => {
     (async function () {
-      client.on("channel.");
       console.log(client, "client");
       const userId = client.user.id;
       const filter = { type: "livestream", members: { $in: [userId] } };

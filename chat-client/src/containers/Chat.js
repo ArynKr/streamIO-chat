@@ -17,7 +17,7 @@ import {
 import "stream-chat-react/dist/css/index.css";
 import useStore1 from "../store";
 import Storage from "../utils/storage";
-import { Conatiners } from "./Containers";
+import { Containers } from "./Containers";
 
 export const RevirtChat = () => {
   const setUserId = useStore1((state) => state.setUserId);
@@ -86,7 +86,7 @@ export const RevirtChat = () => {
   return (
     <div className="chatContainer-main">
       <Chat client={client} darkMode={darkModeTheme}>
-        <Conatiners />
+        <Containers />
       </Chat>
     </div>
   );
