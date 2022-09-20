@@ -16,7 +16,7 @@ export const TeamChannelList = () => {
     })();
   }, [client]);
   return (
-    <div>
+    <div className="containerChannel">
       {channels?.map((channel) => (
         <ChannelItem channel={channel} key={channel?.id} />
       ))}
