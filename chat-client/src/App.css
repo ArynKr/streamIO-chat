@@ -165,3 +165,11 @@ cursor: pointer;
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+
+.deleteBtn {
+  opacity: 0.5;
+}
+
+.deleteBtn:hover {
+  opacity: 1;
+}
