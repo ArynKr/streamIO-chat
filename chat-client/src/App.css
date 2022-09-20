@@ -71,8 +71,13 @@ cursor: pointer;
   padding:2px;
   display: flex;
   align-items: center;
-  color: white;
+  color: whitesmoke;
   gap: 1.5rem;
+  border-radius: 0.5rem;
+  padding-inline: 0.5rem;
+}
+.channelInfo:hover{
+  background-color: black;
 }
 .channel_image{
    width: 1.875rem;
@@ -81,7 +86,7 @@ cursor: pointer;
    /* margin:0 1rem 0 0 ; */
 }
 .channel_name{
-  color: #6A6A6A;
+  color: whitesmoke;
 }
 .participants_info{
   width:100%;
@@ -89,8 +94,16 @@ cursor: pointer;
   padding:2px;
   display: flex;
   align-items: center;
-  color: #6A6A6A;
+  color: whitesmoke;
   gap: 1.5rem;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  padding-inline: 0.5rem;
+
+}
+.participants_info:hover{
+  background-color: black;
+  
 }
 .str-chat__container,.str-chat-channel,.str-chat{
   margin:0 8rem;  
@@ -133,4 +146,17 @@ cursor: pointer;
 
 .str-chat-channel.messaging .str-chat__main-panel {
   padding: 0 !important;
+}
+.channelMessageContainer{
+  height:14rem;
+  overflow-y: scroll;
+}
+*::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+*{
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }

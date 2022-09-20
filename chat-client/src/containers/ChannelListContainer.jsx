@@ -87,7 +87,7 @@ export const ChannelListContainer = () => {
         </button>
 
         <TeamChannelList />
-        <div className="channelTitle">all participants</div>
+        <div className="channelTitle">recent chats</div>
         <Participants />
       </div>
     </div>
