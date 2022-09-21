@@ -9,6 +9,8 @@ import {
 } from "stream-chat-react";
 import useStore1 from "../store";
 import back from "../assets/back-icon.png";
+import { useState } from "react";
+import { MsgOptions } from "../components/MsgOptions";
 
 const EmptyState = () => (
   <div className="channel-empty__container">
@@ -23,6 +25,7 @@ const EmptyState = () => (
 
 export const ChannelContainer = () => {
   const { channel, client } = useChatContext();
+  const [showMsgOptions, setShowMsgOptions] = useState(true);
 
   const CustomChannelHeader = () => {
     const { channel } = useChannelStateContext();
@@ -88,6 +91,7 @@ export const ChannelContainer = () => {
     <Channel channel={channel}>
       <Window>
         <CustomChannelHeader />
+        {showMsgOptions && <MsgOptions />}
         <MessageList />
         <MessageInput />
       </Window>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import useStore1 from "../store";
-import { ModalWrapper } from "../component/ModalWrapper";
+import { ModalWrapper } from "../components/ModalWrapper";
 import { Participants } from "./Participants";
 import { TeamChannelList } from "./TeamChannelList";
 import styles from "./ChannelListContainer.module.css";
