@@ -26,9 +26,11 @@ export const SignUp = () => {
         }
       );
       console.log(data.token);
-      storage.save("chatToken", data.token);
-      setUserId(id);
-      navigate("/chat");
+      if (storage.save("chatToken", data.token)) {
+        setUserId(id);
+        window.alert("signup success!");
+        navigate("/");
+      }
     } catch (err) {
       console.log(err.message);
     }
