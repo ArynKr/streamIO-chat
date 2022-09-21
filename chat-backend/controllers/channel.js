@@ -5,7 +5,6 @@ const apiKey = process.env["CHAT_KEY"];
 const createChannel = async (req, res) => {
   try {
     const { name, created_by_id, members, type, image, id } = req.body;
-    console.log(req.body);
     const ServerClient = StreamChat.getInstance(apiKey, apiSecret);
     const channel = ServerClient.channel(type, id, {
       name,

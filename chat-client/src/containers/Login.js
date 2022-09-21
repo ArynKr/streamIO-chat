@@ -16,9 +16,12 @@ export const Login = () => {
   const loginHandler = async () => {
     storage.delete("chatToken");
     try {
-      const { data } = await axios.post("http://localhost:5173/chat/login", {
-        userId: id,
-      });
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/chat/login`,
+        {
+          userId: id,
+        }
+      );
       console.log(data);
       storage.save("chatToken", data.token);
       setUserId(id);

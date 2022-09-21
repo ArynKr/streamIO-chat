@@ -35,7 +35,7 @@ export const Participants = () => {
       const filter1 = { type: "messaging", members: { $in: [client.user.id] } };
       const sort = [{ last_message_at: -1 }];
       const channels = await client.queryChannels(filter1, sort, {});
-        setMessagingChannel(channels)
+      setMessagingChannel(channels);
       //   let members = []
       //   channels.map((channel)=>{
       //     console.log("working")
@@ -128,51 +128,56 @@ export const Participants = () => {
   }
   return (
     <div>
-    <div className="channelMessageContainer">
-      {messagingChannel
-        ? messagingChannel?.map((channel) => (
-            <div
-              className="participants_info"
-              key={channel.id}
-              onClick={() => handleChannelClickDiv(channel)}
-            >
-              <img
-                src={
-                  Object.values(channel.state.members)[0].user.image ||
-                  "https://www.aurubis.com/.resources/aurubis-light-module/webresources/assets/img/image-avatar-avatar-fallback.svg"
-                }
-                alt="participant"
-                className="channel_image"
-              />
-              <div>{Object.values(channel.state.members)[0].user.id}</div>
-            </div>
-          ))
-        : null}
-        </div>
+      <div className="channelMessageContainer">
+        {messagingChannel
+          ? messagingChannel?.map((channel) => (
+              <div
+                className="participants_info"
+                key={channel.id}
+                onClick={() => handleChannelClickDiv(channel)}
+              >
+                <img
+                  src={
+                    Object.values(channel.state.members)[0].user.image ||
+                    "https://www.aurubis.com/.resources/aurubis-light-module/webresources/assets/img/image-avatar-avatar-fallback.svg"
+                  }
+                  alt="participant"
+                  className="channel_image"
+                />
+                <div>
+                  {Object.values(channel.state.members)[0].user.id ===
+                  client.user.id
+                    ? Object.values(channel.state.members)[1].user.id
+                    : Object.values(channel.state.members)[0].user.id}
+                </div>
+              </div>
+            ))
+          : null}
+      </div>
 
       <div className="channelTitle">{`all participants (${participants?.length})`}</div>
-     <div className="channelMessageContainer">
-      {participants?.map((participant) => (
-        <div
-          className="participants_info"
-          key={participant.user.id}
-          onClick={() => handlePersonalMessaging(participant)}
-        >
-          <img
-            src={
-              participant?.user?.image
-                ? participant?.user?.image
-                : "https://www.aurubis.com/.resources/aurubis-light-module/webresources/assets/img/image-avatar-avatar-fallback.svg"
-            }
-            alt="participant"
-            className="channel_image"
-          />
-          <div>{participant.user.id}</div>
-          <div style={{ color: "green" }}>
-            {participant.user.online ? "online" : null}
+      <div className="channelMessageContainer">
+        {participants?.map((participant) => (
+          <div
+            className="participants_info"
+            key={participant.user.id}
+            onClick={() => handlePersonalMessaging(participant)}
+          >
+            <img
+              src={
+                participant?.user?.image
+                  ? participant?.user?.image
+                  : "https://www.aurubis.com/.resources/aurubis-light-module/webresources/assets/img/image-avatar-avatar-fallback.svg"
+              }
+              alt="participant"
+              className="channel_image"
+            />
+            <div>{participant.user.id}</div>
+            <div style={{ color: "green" }}>
+              {participant.user.online ? "online" : null}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
       </div>
     </div>
   );

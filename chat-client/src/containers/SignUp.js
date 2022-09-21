@@ -17,15 +17,20 @@ export const SignUp = () => {
   const signUpHandler = async () => {
     storage.delete("chatToken");
     try {
-      const { data } = await axios.post("http://localhost:5173/chat/signup", {
-        username: userName,
-        userId: id,
-        email,
-      });
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/chat/signup`,
+        {
+          username: userName,
+          userId: id,
+          email,
+        }
+      );
       console.log(data.token);
-      storage.save("chatToken", data.token);
-      setUserId(id);
-      navigate("/chat");
+      if (storage.save("chatToken", data.token)) {
+        setUserId(id);
+        window.alert("signup success!");
+        navigate("/");
+      }
     } catch (err) {
       console.log(err.message);
     }
