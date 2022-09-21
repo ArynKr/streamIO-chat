@@ -4,13 +4,17 @@ import { ChannelItem } from "./ChannelItem";
 export const TeamChannelList = () => {
   const [channels, setChannels] = useState([]);
   const { client } = useChatContext();
+  const {channel}=useChatContext();
 
   useEffect(() => {
     (async function () {
+      console.log("this is client")
       console.log(client, "client");
       const userId = client.user.id;
       const filter = { type: "livestream", members: { $in: [userId] } };
-      const channels = await client.queryChannels(filter);
+      const options = { limit: 30}
+      const channels = await client.queryChannels(filter,{},options);
+      console.log(channel,"client")
       console.log(channels, "client");
       setChannels(channels);
     })();

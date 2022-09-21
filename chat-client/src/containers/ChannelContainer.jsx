@@ -9,6 +9,7 @@ import {
 } from "stream-chat-react";
 import useStore1 from "../store";
 import back from "../assets/back-icon.png";
+import { useEffect } from "react";
 
 const EmptyState = () => (
   <div className="channel-empty__container">
@@ -23,6 +24,16 @@ const EmptyState = () => (
 
 export const ChannelContainer = () => {
   const { channel, client } = useChatContext();
+
+  // useEffect(()=>{
+  // //  (async function(){
+  //   const filter = { type: "livestream", members: { $in: ["shrinkhla"] } };
+  //   // const channels = await client.queryChannels(filter);
+  //   // console.log(channels, "coming");
+  //   console.log("coming")
+  // //  })()
+    
+  //  },)
 
   const CustomChannelHeader = () => {
     const { channel } = useChannelStateContext();
