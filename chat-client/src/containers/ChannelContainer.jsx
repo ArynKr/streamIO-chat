@@ -6,10 +6,11 @@ import {
   Thread,
   useChatContext,
   useChannelStateContext,
+  useMessageContext,
 } from "stream-chat-react";
 import useStore1 from "../store";
 import back from "../assets/back-icon.png";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const EmptyState = () => (
   <div className="channel-empty__container">
@@ -24,6 +25,7 @@ const EmptyState = () => (
 
 export const ChannelContainer = () => {
   const { channel, client } = useChatContext();
+  const [oldUser,setOldUser] = useState("")
 
   // useEffect(()=>{
   // //  (async function(){
@@ -34,7 +36,86 @@ export const ChannelContainer = () => {
   // //  })()
     
   //  },)
+  // let me = null; //olduserdata
+//   {flagToDisplayImage ?
+//     <div style={{display:"flex",flexDirection:"row",gap:"0 10px",marginBottom:"10px",alignItems:"center"}} >
+//  <img src={message.user.image?message.user.image :"https://www.aurubis.com/.resources/aurubis-light-module/webresources/assets/img/image-avatar-avatar-fallback.svg"} style={{width:"20px",height:"20px",borderRadius:"50%"}}/>
+//  <div>{message.user.id}</div>
+  
+ 
+//  </div>:"haha"}
+ 
+// {flag && "hhhhhhhhh"}
+// let arr = []
+// let messageArray = []
+  const CustomMessage = (props) => {
+    
+    
+    const {message}=useMessageContext();
+    // console.log(message,"...")
+    let messageByLoginUser = message.user.id === client.user.id;
+    // let flagToDisplayImage = true;
 
+    // let userOfMessage = message.user.id;
+    
+    // console.log(me,userOfMessage,"what")
+    // if(me === userOfMessage){
+    //    if(!arr.includes(message)){
+    //     arr.push(message)
+    //    }
+
+    // }else{
+    //   messageArray.push(arr)
+    //   arr = [];
+    //   arr.push(message)
+    // }
+    // me = message.user.id
+    // let flag = true
+    // console.log(flagToDisplayImage,"what")
+    // console.log(messageArray,"arr")
+
+    return(
+    //  <div>
+    //  {
+    //   messageArray?.map((singleMessageArray)=>{
+    //     let length = singleMessageArray.length;
+    //     for(let i = 0 ; i<length;i++){
+    //       let message = singleMessageArray[i];
+    //       console.log(message,"mmmm")
+    //       if(i===0){
+    //         return (
+    //           <div>
+    //         <div style={{display:"flex",flexDirection:"row",gap:"0 10px",marginBottom:"10px",alignItems:"center"}} >
+    //  <img src={message.user.image?message.user.image :"https://www.aurubis.com/.resources/aurubis-light-module/webresources/assets/img/image-avatar-avatar-fallback.svg"} style={{width:"20px",height:"20px",borderRadius:"50%"}}/>
+    //   <div>{message.user.id}</div></div>
+    //   <div style={{marginBottom:"0px",backgroundColor: "grey",width:"90%",borderRadius:'8px',height:"fit-content",color:"white",wordBreak:"break-all",padding:"10px",marginLeft:"1.5rem",backgroundColor:messageByLoginUser?"black":"grey"}}>{message.text}</div>
+    //   </div>)
+    //       }
+    //       else{
+    //         <div style={{marginBottom:"0px",backgroundColor: "grey",width:"90%",borderRadius:'8px',height:"fit-content",color:"white",wordBreak:"break-all",padding:"10px",marginLeft:"1.5rem",backgroundColor:messageByLoginUser?"black":"grey"}}>{message.text}</div>
+    //       }
+
+    //     }
+    //   })
+    // }
+    //  </div>
+
+
+    //TRIED OF SHOWING A SINGLE LOGO ON MESSAGE BY SAME USER AT SAME TIME
+       <div style={ {marginLeft:messageByLoginUser ?"1.5rem":"0",marginRight:messageByLoginUser?"0":"1.5rem"} }>
+      
+     <div style={{display:"flex",flexDirection:"row",gap:"0 10px",marginBottom:"10px",alignItems:"center"}} >
+       <img src={message.user.image?message.user.image :"https://www.aurubis.com/.resources/aurubis-light-module/webresources/assets/img/image-avatar-avatar-fallback.svg"} style={{width:"20px",height:"20px",borderRadius:"50%"}}/>
+    <div style={{fontSize:"0.7rem"}}>{message.user.id}</div>
+        
+      </div>
+     <div style={{marginBottom:"0px",backgroundColor: "grey",width:"90%",borderRadius:'8px',height:"fit-content",color:"white",wordBreak:"break-all",padding:"10px",marginLeft:"1.5rem",backgroundColor:messageByLoginUser?"black":"grey"}}>{message.text}</div>
+     </div>
+      
+     
+      
+    )
+  };
   const CustomChannelHeader = () => {
     const { channel } = useChannelStateContext();
     const { image, member_count } = channel.data || {};
@@ -96,7 +177,7 @@ export const ChannelContainer = () => {
   };
 
   return (
-    <Channel channel={channel}>
+    <Channel channel={channel} Message={CustomMessage}>
       <Window>
         <CustomChannelHeader />
         <MessageList />
@@ -106,3 +187,4 @@ export const ChannelContainer = () => {
     </Channel>
   );
 };
+

@@ -1,5 +1,5 @@
 /* Custom Styles */
-
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
 .str-chat__container, .str-chat-channel, .str-chat {
   margin: 0 !important;
 }
@@ -126,7 +126,7 @@ cursor: pointer;
 }
 
 .messaging.str-chat .str-chat__list {
-  padding: 0 0.5rem 0 !important;
+ 
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
@@ -172,4 +172,7 @@ cursor: pointer;
 
 .deleteBtn:hover {
   opacity: 1;
+}
+*{
+  font-family: 'Poppins';
 }
