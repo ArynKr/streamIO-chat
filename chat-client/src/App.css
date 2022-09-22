@@ -180,3 +180,18 @@ cursor: pointer;
 *{
   font-family: 'Poppins';
 }
+.str-chat__date-separator {
+  display: flex;
+  padding:1rem !important;
+ 
+  align-items: center;
+}
+.str-chat__date-separator-date {
+  
+  font-family: "Poppins","sans-serif" !important;
+}
+.str-chat__date-separator-line {
+
+  background-color:#ffffff55 !important;
+  
+}

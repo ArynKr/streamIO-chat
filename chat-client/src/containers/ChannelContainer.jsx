@@ -10,7 +10,7 @@ import {
 } from "stream-chat-react";
 import useStore1 from "../store";
 import back from "../assets/back-icon.png";
-import { useState,useEffect} from "react";
+import { useState,useEffect, useRef} from "react";
 
 import threedot from "../assets/three-dots.svg";
 import { useEmojiContext, useMessageInputContext} from "stream-chat-react";
@@ -53,6 +53,7 @@ const {client,channel}=useChatContext()
   const [loadMore,setLoadMore] = useState(1);
   const [replyArr,setReplyArr] = useState([])
   let messageByLoginUser = message.user.id === client.user.id;
+  const ref = useRef()
   
 
 
@@ -96,6 +97,16 @@ const {client,channel}=useChatContext()
   // console.log(messageArray,"arr")
 
 
+    useEffect(() => {
+      const closeModal = (e) => {
+        if (ref.current && !ref.current.contains(e.target)) {
+          setShowMsgOptions(false);
+        }
+      };
+      document.addEventListener("mousedown", closeModal);
+      return () => document.removeEventListener("mousedown", closeModal);
+    }, [ref, setShowMsgOptions]);
+  
   return(
   //  <div>
   //  {
@@ -124,12 +135,12 @@ const {client,channel}=useChatContext()
 
 
   //TRIED OF SHOWING A SINGLE LOGO ON MESSAGE BY SAME USER AT SAME TIME
-     <div style={ {marginLeft:messageByLoginUser ?"1.5rem":"0",marginRight:messageByLoginUser?"0":"1.5rem",width:"90%"} }>
+     <div style={ {marginLeft:messageByLoginUser ?"1.5rem":"0",marginRight:messageByLoginUser?"0":"1.5rem",width:"90%"} } ref={ref}>
     
    <div style={{display:"flex",flexDirection:"row",gap:"0 10px",marginBottom:"10px",alignItems:"center",justifyContent:"space-between",marginTop:"1rem"}} >
    <div style={{display:"flex",alignItems:"center",gap:"0.5rem"}}>
-     <img src={message.user.image?message.user.image :"https://www.aurubis.com/.resources/aurubis-light-module/webresources/assets/img/image-avatar-avatar-fallback.svg"} style={{width:"20px",height:"20px",borderRadius:"50%"}}/>
-    <div style={{fontSize:"0.7rem"}}>{message.user.id}</div>
+    { !messageByLoginUser && <img src={message.user.image?message.user.image :"https://www.aurubis.com/.resources/aurubis-light-module/webresources/assets/img/image-avatar-avatar-fallback.svg"} style={{width:"20px",height:"20px",borderRadius:"50%"}}/>}
+    <div style={{fontSize:"0.7rem",marginLeft: messageByLoginUser&&"1.6rem"}}>{message.user.id}</div>
     </div>
   
     <div onClick={()=>setShowMsgOptions(!showMsgOptions)}> <img src={threedot} style={{cursor:'pointer'}}/></div>
@@ -138,10 +149,11 @@ const {client,channel}=useChatContext()
      
     
    <div style={{marginBottom:"0px",backgroundColor: "grey",width:"90%",borderRadius:'8px',height:"fit-content",color:"white",wordBreak:"break-all",padding:"10px",marginLeft:"1.5rem",backgroundColor:messageByLoginUser?"black":"grey"}}>{message.type === "deleted"?"Message is deleated":message.text}</div>
-   {loadMore <= message.reply_count && <div style={{color:"red",fontSize:"0.6rem",cursor:"pointer"}} onClick={()=>getReplies()}>View Reply</div>}
+
    { replyArr?.messages?.map((reply,i)=>
-    <div key={i} style={{marginBottom:"0px",backgroundColor: "grey",width:"90%",borderRadius:'8px',height:"fit-content",color:"white",wordBreak:"break-all",padding:"10px",marginLeft:"1.5rem",backgroundColor:messageByLoginUser?"black":"grey",marginTop:"0.2rem"}}>{reply.text}</div>
+    <div key={i} style={{marginBottom:"0px",backgroundColor: "grey",width:"85%",borderRadius:'8px',height:"fit-content",color:"white",wordBreak:"break-all",padding:"10px",marginLeft:"2.4rem",backgroundColor:messageByLoginUser?"black":"grey",marginTop:"0.2rem"}}>{reply.text}</div>
    )}
+   {loadMore <= message.reply_count && <div style={{color:"red",fontSize:"0.6rem",cursor:"pointer",background:"black",width:"95%",height:"1.5rem",display:"flex",alignItems:"center",marginTop:"1rem",paddingInline:"1rem"}} onClick={()=>getReplies()}>View Reply</div>}
 
   {loadMore === replyArr?.messages?.length && <div style={{color:"red",fontSize:"0.6rem",cursor:"pointer"}} onClick={()=>hideReply()}>Hide Reply</div>}
 
