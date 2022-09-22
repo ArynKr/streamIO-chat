@@ -173,6 +173,10 @@ cursor: pointer;
 .deleteBtn:hover {
   opacity: 1;
 }
+.messaging.str-chat .str-chat__list {
+  padding:  0 !important;
+  background: var(--white);
+}
 *{
   font-family: 'Poppins';
 }

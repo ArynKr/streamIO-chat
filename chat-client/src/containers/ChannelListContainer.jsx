@@ -1,14 +1,14 @@
 import { useState ,useEffect} from "react";
 import axios from "axios";
 import useStore1 from "../store";
-import { ModalWrapper } from "../component/ModalWrapper";
+import { ModalWrapper } from "../components/ModalWrapper";
 import { Participants } from "./Participants";
 import { TeamChannelList } from "./TeamChannelList";
 import styles from "./ChannelListContainer.module.css";
 import { ChatParticipants } from "./ChatParticipants";
 import { createChannel } from "../utils/create-channel";
 import { useChatContext } from "stream-chat-react";
-
+import threedot from "../assets/three-dots.svg";
 export const Search = () => {
   return (
     <div>
