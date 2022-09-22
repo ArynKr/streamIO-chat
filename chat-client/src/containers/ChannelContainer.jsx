@@ -140,7 +140,7 @@ const {client,channel}=useChatContext()
    <div style={{marginBottom:"0px",backgroundColor: "grey",width:"90%",borderRadius:'8px',height:"fit-content",color:"white",wordBreak:"break-all",padding:"10px",marginLeft:"1.5rem",backgroundColor:messageByLoginUser?"black":"grey"}}>{message.type === "deleted"?"Message is deleated":message.text}</div>
    {loadMore <= message.reply_count && <div style={{color:"red",fontSize:"0.6rem",cursor:"pointer"}} onClick={()=>getReplies()}>View Reply</div>}
    { replyArr?.messages?.map((reply,i)=>
-    <div key={i}>{reply.text}</div>
+    <div key={i} style={{marginBottom:"0px",backgroundColor: "grey",width:"90%",borderRadius:'8px',height:"fit-content",color:"white",wordBreak:"break-all",padding:"10px",marginLeft:"1.5rem",backgroundColor:messageByLoginUser?"black":"grey",marginTop:"0.2rem"}}>{reply.text}</div>
    )}
 
   {loadMore === replyArr?.messages?.length && <div style={{color:"red",fontSize:"0.6rem",cursor:"pointer"}} onClick={()=>hideReply()}>Hide Reply</div>}
