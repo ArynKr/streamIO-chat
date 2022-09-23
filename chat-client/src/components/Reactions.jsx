@@ -22,14 +22,20 @@ const emojis = {
 };
 
 const Reactions = ({ message }) => {
-  const { client, channel } = useChatContext();
-  const messageByLoginUser = message.user.id === client.user.id;
+  const { channel } = useChatContext();
   const reactions = message.reaction_counts;
   const emojiKeys = Object.keys(reactions);
   const emojiValues = Object.values(reactions);
 
-  const deleteReaction = async (em) => {
+  const isCurrentUsersEmoji = (em) => {
     if (message.own_reactions.find((reaction) => reaction.type === em)) {
+      return true;
+    }
+    return false;
+  };
+
+  const deleteReaction = async (em) => {
+    if (isCurrentUsersEmoji(em)) {
       await channel.deleteReaction(message.id, em);
     }
   };
@@ -41,6 +47,11 @@ const Reactions = ({ message }) => {
           key={i}
           onClick={() => deleteReaction(em)}
           className={styles.singleEmoji}
+          style={{
+            backgroundColor: isCurrentUsersEmoji(em)
+              ? "rgba(30, 30, 30, 0.8)"
+              : "rgba(64, 64, 64, 0.843)",
+          }}
         >
           <span>{emojis[em]}</span>
           <span>{emojiValues[i]}</span>
