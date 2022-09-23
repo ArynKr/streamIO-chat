@@ -8,10 +8,11 @@
 }
 
 .singleEmoji {
-  background-color: gray;
+  background-color: rgba(64, 64, 64, 0.843);
   margin: 0;
   padding: 0.1rem 0.2rem;
   border-radius: 1rem;
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
