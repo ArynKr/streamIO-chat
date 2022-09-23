@@ -191,7 +191,10 @@ cursor: pointer;
   font-family: "Poppins","sans-serif" !important;
 }
 .str-chat__date-separator-line {
+  background-color:#ffffff55 !important; 
+}
 
-  background-color:#ffffff55 !important;
-  
+button:disabled, button[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

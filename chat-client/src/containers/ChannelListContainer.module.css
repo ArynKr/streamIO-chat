@@ -45,7 +45,7 @@
 }
 
 .btn:disabled, 
-button[disabled] {
+.btn[disabled] {
   background-color: #80008077;
   color: black;
   cursor: not-allowed;

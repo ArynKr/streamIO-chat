@@ -1,4 +1,4 @@
-import { useState ,useEffect} from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import useStore1 from "../store";
 import { ModalWrapper } from "../components/ModalWrapper";
@@ -23,15 +23,7 @@ export const ChannelListContainer = () => {
   const setShowChatModal = useStore1((state) => state.setShowChatModal);
   const [channelName, setChannelName] = useState("");
   const [members, setMembers] = useState([userId]);
-  useEffect(()=>{
-    //  (async function(){
-      const filter = { type: "livestream", members: { $in: ["shrinkhla"] } };
-      // const channels = await client.queryChannels(filter);
-      // console.log(channels, "coming");
-      console.log("coming")
-    //  })()
-      
-     },[useChatContext])
+
   const handleCreateNewChannel = async (e) => {
     e.preventDefault();
     try {
