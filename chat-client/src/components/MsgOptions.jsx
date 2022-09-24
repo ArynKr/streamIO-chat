@@ -1,9 +1,11 @@
 import { useChatContext } from "stream-chat-react";
+import useStore1 from "../store";
 import styles from "./MsgOptions.module.css";
 
-export const MsgOptions = ({ message, setShowMsgOptions }) => {
+export const MsgOptions = ({ message, setShowMsgOptions,setReplied,setShowReplyModal}) => {
   const { client, channel } = useChatContext();
   let messageID = message.id;
+  const setIsReplying = useStore1(state=>state.setIsReplying);
   const messageByLoginUser = message.user.id === client.user.id;
   const deleteMessage = () => {
     (async function () {
@@ -20,6 +22,7 @@ export const MsgOptions = ({ message, setShowMsgOptions }) => {
       parent_id: messageID,
       show_in_channel: false,
     });
+    setReplied(true)
 
     //    const replyMessage = await channel.sendMessage({
     //     text: 'Hey, I am replying to a message!',
@@ -35,8 +38,11 @@ export const MsgOptions = ({ message, setShowMsgOptions }) => {
     wow: "😲",
     thumbsUp: "👍",
     clap: "👏",
+    victory:"✌️",
+    amazing:"🤩",
+    sad:"😢"
   };
-
+  
   async function addReaction(reaction) {
     console.log(message);
     await channel.sendReaction(messageID, {
@@ -84,6 +90,25 @@ export const MsgOptions = ({ message, setShowMsgOptions }) => {
         >
           {emojis.clap}
         </button>
+        <button
+          onClick={() => addReaction("victory")}
+          className={`${styles.btn} ${styles.emoji}`}
+        >
+          {emojis.victory}
+        </button>
+
+        <button
+          onClick={() => addReaction("amazing")}
+          className={`${styles.btn} ${styles.emoji}`}
+        >
+          {emojis.amazing}
+        </button>
+        <button
+          onClick={() => addReaction("sad")}
+          className={`${styles.btn} ${styles.emoji}`}
+        >
+          {emojis.sad}
+        </button>
       </div>
 
       {/* Buttons */}
@@ -95,7 +120,11 @@ export const MsgOptions = ({ message, setShowMsgOptions }) => {
         {/* Reply */}
         <div>
           <button
-            onClick={() => messageReply()}
+            onClick={() => {
+              setIsReplying(true)
+              setShowReplyModal(true)
+              setShowMsgOptions(false)
+              messageReply()}}
             className={`${styles.btn} ${styles.menu}`}
           >
             Reply
@@ -109,7 +138,9 @@ export const MsgOptions = ({ message, setShowMsgOptions }) => {
         <div>
           <button
             disabled={!messageByLoginUser}
-            onClick={() => deleteMessage()}
+            onClick={() => {
+              setShowMsgOptions(false)
+              deleteMessage()}}
             className={`${styles.btn} ${styles.menu}`}
           >
             Delete

@@ -4,6 +4,7 @@ export const useUserData = (set) => ({
   showChannelList: true,
   activeChannel: null,
   showChatModal: false,
+  isReplying:false,
 
   setShowChatModal: (payload) => set(() => ({ showChatModal: payload })),
   setUserId: (payload) => set(() => ({ userId: payload })),
@@ -11,4 +12,5 @@ export const useUserData = (set) => ({
   setShowChannelList: (payload) =>
     set((state) => ({ showChannelList: payload })),
   setActiveChannel: (payload) => set(() => ({ activeChannel: payload })),
+  setIsReplying:(payload)=>set(()=>({isReplying:payload}))
 });

@@ -13,23 +13,15 @@ import back from "../assets/back-icon.png";
 import { useState, useEffect, useRef } from "react";
 
 import threedot from "../assets/three-dots.svg";
-import { useEmojiContext, useMessageInputContext } from "stream-chat-react";
-import { Suspense } from "react";
+
 import { MsgOptions } from "../components/MsgOptions";
 import Reactions from "../components/Reactions";
+import { ReplyContainer } from "./ReplyContainer";
+import { CustomInput } from "./CustomInput";
 
-const EmptyState = () => (
-  <div className="channel-empty__container">
-    <p className="channel-empty__first">
-      This is the beginning of your chat history.
-    </p>
-    <p className="channel-empty__second">
-      Send messages, attachments, links, emojis, and more!
-    </p>
-  </div>
-);
 
-const CustomMessage = (props) => {
+
+const CustomMessage = () => {
   const { client, channel } = useChatContext();
   const { message } = useMessageContext();
   const [showMsgOptions, setShowMsgOptions] = useState(false);
@@ -37,16 +29,17 @@ const CustomMessage = (props) => {
   const [replyArr, setReplyArr] = useState([]);
   const messageByLoginUser = message.user.id === client.user.id;
   const ref = useRef();
-
+  const [replied,setReplied] = useState(false)
+  const [showReplyModal,setShowReplyModal] = useState(false)
+  
   async function getReplies() {
     const reply = await channel.getReplies(message.id, { limit: loadMore });
     setReplyArr(reply);
-    console.log(replyArr, "rep");
     setLoadMore((loadMore) => loadMore + 1);
   }
-
-  function hideReply() {
-    setReplyArr([]);
+ function hideReply() {
+    setReplyArr([])
+    setLoadMore(1)
   }
 
   useEffect(() => {
@@ -58,12 +51,14 @@ const CustomMessage = (props) => {
     document.addEventListener("mousedown", closeModal);
     return () => document.removeEventListener("mousedown", closeModal);
   }, [ref, setShowMsgOptions]);
-
+  
+  const hasReactions = message?.reaction_counts && (Object.values(message?.reaction_counts )).length > 0;
+  
   return (
     <div
       style={{
-        marginLeft: messageByLoginUser ? "1.5rem" : "0",
-        marginRight: messageByLoginUser ? "0" : "1.5rem",
+        marginLeft: messageByLoginUser ? "1.3rem" : "0",
+        marginRight: messageByLoginUser ? "0" : "1.3rem",
         width: "90%",
       }}
       ref={ref}
@@ -77,6 +72,7 @@ const CustomMessage = (props) => {
           alignItems: "center",
           justifyContent: "space-between",
           marginTop: "1rem",
+          
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
@@ -87,7 +83,7 @@ const CustomMessage = (props) => {
                   ? message.user.image
                   : "https://www.aurubis.com/.resources/aurubis-light-module/webresources/assets/img/image-avatar-avatar-fallback.svg"
               }
-              style={{ width: "20px", height: "20px", borderRadius: "50%" }}
+              style={{ width: "20px", height: "20px", borderRadius: "50%", marginLeft: "5px"}}
               alt="display pic"
             />
           )}
@@ -95,6 +91,7 @@ const CustomMessage = (props) => {
             style={{
               fontSize: "0.7rem",
               marginLeft: messageByLoginUser && "1.6rem",
+             
             }}
           >
             {message.user.id}
@@ -107,14 +104,14 @@ const CustomMessage = (props) => {
         </div>
       </div>
       {showMsgOptions && (
-        <MsgOptions message={message} setShowMsgOptions={setShowMsgOptions} />
+        <MsgOptions message={message} setShowMsgOptions={setShowMsgOptions} setReplied={setReplied} setShowReplyModal={setShowReplyModal} />
       )}
 
-      <Reactions message={message} />
+      
 
       <div
         style={{
-          marginBottom: "0px",
+          marginBottom: hasReactions?"19px":"0px",
           width: "90%",
           borderRadius: "8px",
           height: "fit-content",
@@ -122,10 +119,17 @@ const CustomMessage = (props) => {
           wordBreak: "break-all",
           padding: "10px",
           marginLeft: "1.5rem",
+          position:"relative",
           backgroundColor: messageByLoginUser ? "black" : "grey",
+
         }}
       >
         {message.type === "deleted" ? "Message is deleated" : message.text}
+        {message?.attachments.length > 0 && message?.attachments?.map((attachment)=>
+          <img src={attachment.image_url} style={{height:"10rem",width:'100%'}}/>
+          )
+        }
+        <Reactions message={message} />
       </div>
 
       {replyArr?.messages?.map((reply, i) => (
@@ -147,7 +151,11 @@ const CustomMessage = (props) => {
           {reply.text}
         </div>
       ))}
-      {loadMore <= message.reply_count && (
+    
+      { replied ? 
+        
+        (
+        message?.reply_count !== replyArr?.messages?.length ? (
         <div
           style={{
             color: "red",
@@ -160,27 +168,44 @@ const CustomMessage = (props) => {
             alignItems: "center",
             marginTop: "1rem",
             paddingInline: "1rem",
+            marginLeft: messageByLoginUser?"12px":"2px",
           }}
           onClick={() => getReplies()}
         >
-          View Reply
+         {replyArr?.messages?.length > 0  ? "Load More Replies":"View Reply"}
         </div>
-      )}
+      ) :
 
-      {loadMore === replyArr?.messages?.length && (
+(
         <div
-          style={{ color: "red", fontSize: "0.6rem", cursor: "pointer" }}
+        style={{
+          color: "red",
+          fontSize: "0.6rem",
+          cursor: "pointer",
+          background: "black",
+          width: "95%",
+          height: "1.5rem",
+          display: "flex",
+          alignItems: "center",
+          marginTop: "1rem",
+          paddingInline: "1rem",
+          marginLeft: messageByLoginUser?"12px":"2px",
+        }}
           onClick={() => hideReply()}
         >
           Hide Reply
         </div>
-      )}
+      )
+      ):null
+    }
+
     </div>
   );
 };
 
 export const ChannelContainer = () => {
   const { channel, client } = useChatContext();
+  const isReplying = useStore1(state=>state.isReplying);
 
   const CustomChannelHeader = () => {
     const { channel } = useChannelStateContext();
@@ -243,13 +268,13 @@ export const ChannelContainer = () => {
   };
 
   return (
-    <Channel channel={channel} Message={CustomMessage}>
+    <Channel channel={channel} Message={CustomMessage} Input={CustomInput}>
       <Window>
         <CustomChannelHeader />
         <MessageList />
-        <MessageInput />
+        
+       {!isReplying ?<MessageInput placeholder="Type Message..." />:null}
       </Window>
-      <Thread />
-    </Channel>
+  </Channel>
   );
 };

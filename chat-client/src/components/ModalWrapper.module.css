@@ -3,6 +3,7 @@
   top: 50%;
   left: 0;
   width: 100%;
+  overflow-x: scroll;
   transform: translateY(-50%);
   background-color: rgba(0, 0, 0);
   color: white;
