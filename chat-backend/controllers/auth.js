@@ -9,6 +9,12 @@ const signup = async (req, res) => {
     const { userName, userId, email } = req.body;
     const ServerClient = StreamChat.getInstance(apiKey, apiSecret);
     const token = ServerClient.createToken(userId);
+    const updRes = await ServerClient.upsertUser({
+      id: userId,
+      name: userName,
+      email: email,
+    });
+    console.log(updRes);
     addToGlobalChannel(userId);
     res.json({ token, userName, userId, email });
   } catch (err) {
